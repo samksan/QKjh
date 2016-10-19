@@ -12,6 +12,7 @@ class NetNumber : public QObject
     Q_OBJECT
 public:
     static QString getHtml(QString url);
+    static void strToDB(QString str);
 };
 
 #endif // NETNUMBER_H

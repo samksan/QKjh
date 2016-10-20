@@ -13,6 +13,8 @@ class NetNumber : public QObject
 public:
     static QString getHtml(QString url);
     static void strToDB(QString str);
+private:
+    static void toDB(int number[100][9]);
 };
 
 #endif // NETNUMBER_H

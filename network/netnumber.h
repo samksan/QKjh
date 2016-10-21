@@ -6,6 +6,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QtCore>
+#include <QList>
 
 class NetNumber : public QObject
 {
@@ -13,6 +14,7 @@ class NetNumber : public QObject
 public:
     static QString getHtml(QString url);
     static void strToDB(QString str);
+    static QList<QList<int>> getNumbers();
 private:
     static void toDB(int number[100][9]);
 };

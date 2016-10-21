@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include "network/netnumber.h"
 #include <QDebug>
+#include <QList>
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +11,16 @@ int main(int argc, char *argv[])
 
     NetNumber::strToDB(data);
 
-//    qDebug() << data << endl;
+    QList<QList<int>> list = NetNumber::getNumbers();
+
+    foreach (QList<int> tempList, list) {
+
+        qDebug() << tempList[0] << "," << tempList[1] << "," << tempList[2]
+                                << ","<< tempList[3] << ","<< tempList[4]
+                                << ","<< tempList[5] << ","<< tempList[6]
+                                << ","<< tempList[7] << ","<< tempList[8] << endl;
+    }
+
+    //    qDebug() << data << endl;
     return a.exec();
 }

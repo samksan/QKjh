@@ -4,6 +4,33 @@
 #include <QSqlQuery>
 #include <QSqlTableModel>
 
+QList<QList<int> > NetNumber::getNumbers()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setHostName("localhost");
+    db.setDatabaseName("kjh.db");
+    db.open();
+    QSqlQuery query;
+    query.exec("SELECT * FROM kjh");
+
+    QList<QList<int>> list;
+    while(query.next())
+    {
+       QList<int> temp;
+       temp.append(query.value(0).toInt());
+       temp.append(query.value(1).toInt());
+       temp.append(query.value(2).toInt());
+       temp.append(query.value(3).toInt());
+       temp.append(query.value(4).toInt());
+       temp.append(query.value(5).toInt());
+       temp.append(query.value(6).toInt());
+       temp.append(query.value(7).toInt());
+       temp.append(query.value(8).toInt());
+       list.append(temp);
+    }
+
+    return list;
+}
 void NetNumber::toDB(int number[100][9])
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -98,5 +125,7 @@ void NetNumber::strToDB(QString str)
     NetNumber::toDB(result);
 
 }
+
+
 
 

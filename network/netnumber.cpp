@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlTableModel>
 
 void NetNumber::toDB(int number[100][9])
 {
@@ -11,40 +12,43 @@ void NetNumber::toDB(int number[100][9])
     db.open();
 
     QSqlQuery query;
-
     bool success;
+
 //    success = query.exec("create table kjh(sn int primarykey,n1 int,n2 int,n3 int,n4 int,n5 int,n6 int,n7 int,nt int)");
 //    if(success)
 //        qDebug() << "create database table kjh success" << endl;
 //    else
 //        qDebug() << "create database table kjh failed" << endl;
 
-    for (int var = 0; var < 100; ++var) {
-        query.bindValue(0,number[var][0]);
-        query.bindValue(1,number[var][1]);
-        query.bindValue(2,number[var][2]);
-        query.bindValue(3,number[var][3]);
-        query.bindValue(4,number[var][4]);
-        query.bindValue(5,number[var][5]);
-        query.bindValue(6,number[var][6]);
-        query.bindValue(7,number[var][7]);
-        query.bindValue(8,number[var][8]);
-        success = query.exec();
-        if(success)
-            qDebug() << "Success" << endl;
-        else
-            qDebug() << "Failed" << endl;
+//    success = query.exec("DELETE FROM kjh");
+//    if(success)
+//        qDebug() << "Table clear success" << endl;
+//    else
+//        qDebug() << "Table clear failed" << endl;
+
+//    query.prepare("INSERT INTO kjh VALUES(?,?,?,?,?,?,?,?,?)");
+//    for (int var = 0; var < 100; ++var) {
+//        query.bindValue(0,number[var][0]);
+//        query.bindValue(1,number[var][1]);
+//        query.bindValue(2,number[var][2]);
+//        query.bindValue(3,number[var][3]);
+//        query.bindValue(4,number[var][4]);
+//        query.bindValue(5,number[var][5]);
+//        query.bindValue(6,number[var][6]);
+//        query.bindValue(7,number[var][7]);
+//        query.bindValue(8,number[var][8]);
+//        query.exec();
+//    }
+
+    success = query.exec("select * from kjh");
+
+    int total = 0;
+    while (query.next()) {
+        total++;
     }
+    qDebug() << total << endl;
 
 
-
-    //    for (int var = 0; var < 100; ++var) {
-    //        qDebug() << number[var][0] << "," << number[var][1] << "," << number[var][2]
-    //                                   << "," << number[var][3] << "," << number[var][4]
-    //                                   << "," << number[var][5] << "," << number[var][6]
-    //                                   << "," << number[var][7] << "," << number[var][8]
-    //                                   << endl;
-    //    }
 }
 
 QString NetNumber::getHtml(QString url)

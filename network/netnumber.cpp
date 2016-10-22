@@ -8,7 +8,7 @@ QList<QList<int> > NetNumber::getNumbers()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName("localhost");
-    db.setDatabaseName("kjh.db");
+    db.setDatabaseName("kjhdb.db");
     db.open();
     QSqlQuery query;
     query.exec("SELECT * FROM kjh");
@@ -29,53 +29,46 @@ QList<QList<int> > NetNumber::getNumbers()
        list.append(temp);
     }
 
+    db.close();
     return list;
 }
 void NetNumber::toDB(int number[100][9])
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName("localhost");
-    db.setDatabaseName("kjh.db");
+    db.setDatabaseName("kjhdb.db");
     db.open();
 
     QSqlQuery query;
-    bool success;
+    query.exec("create table kjh(sn int primarykey,n1 int,n2 int,n3 int,n4 int,n5 int,n6 int,n7 int,nt int)");
+    query.exec("DELETE FROM kjh");
 
-//    success = query.exec("create table kjh(sn int primarykey,n1 int,n2 int,n3 int,n4 int,n5 int,n6 int,n7 int,nt int)");
-//    if(success)
-//        qDebug() << "create database table kjh success" << endl;
-//    else
-//        qDebug() << "create database table kjh failed" << endl;
+    query.prepare("INSERT INTO kjh VALUES(?,?,?,?,?,?,?,?,?)");
+    for (int var = 0; var < 100; ++var) {
+        query.bindValue(0,number[var][0]);
+        query.bindValue(1,number[var][1]);
+        query.bindValue(2,number[var][2]);
+        query.bindValue(3,number[var][3]);
+        query.bindValue(4,number[var][4]);
+        query.bindValue(5,number[var][5]);
+        query.bindValue(6,number[var][6]);
+        query.bindValue(7,number[var][7]);
+        query.bindValue(8,number[var][8]);
+        query.exec();
+    }
 
-//    success = query.exec("DELETE FROM kjh");
-//    if(success)
-//        qDebug() << "Table clear success" << endl;
-//    else
-//        qDebug() << "Table clear failed" << endl;
-
-//    query.prepare("INSERT INTO kjh VALUES(?,?,?,?,?,?,?,?,?)");
-//    for (int var = 0; var < 100; ++var) {
-//        query.bindValue(0,number[var][0]);
-//        query.bindValue(1,number[var][1]);
-//        query.bindValue(2,number[var][2]);
-//        query.bindValue(3,number[var][3]);
-//        query.bindValue(4,number[var][4]);
-//        query.bindValue(5,number[var][5]);
-//        query.bindValue(6,number[var][6]);
-//        query.bindValue(7,number[var][7]);
-//        query.bindValue(8,number[var][8]);
-//        query.exec();
-//    }
-
-    success = query.exec("select * from kjh");
+    query.exec("select * from kjh");
 
     int total = 0;
     while (query.next()) {
         total++;
     }
-    qDebug() << total << endl;
+    if(total == 100)
+        qDebug() << "数据更新成功" << endl;
+    else
+        qDebug() << "数据更新失败" << endl;
 
-
+    db.close();
 }
 
 QString NetNumber::getHtml(QString url)
